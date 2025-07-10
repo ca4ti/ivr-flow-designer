@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roteiro de Instalação e Implantação do Designer de Fluxo IVR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        pre {
+            background: #eee;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Roteiro Completo de Instalação e Implantação</h1>
+        <p>Este guia detalha todos os passos, desde a criação do projeto na sua máquina local até a implantação em um servidor Ubuntu.</p>
+
+        <h2>Parte 1: Preparando o Ambiente Local (Onde se Cria os Arquivos)</h2>
+        <p>Esta parte é crucial e deve ser feita no seu computador pessoal. É aqui que o <code>package.json</code> será criado corretamente.</p>
+
+        <h3>1. Crie o Projeto React com a Estrutura Correta</h3>
+        <ul>
+            <li>Abra seu terminal ou prompt de comando.</li>
+            <li>Navegue até o diretório onde deseja criar a pasta do projeto (ex: <code>cd Documentos</code>).</li>
+            <li>Execute o comando abaixo para que o <code>create-react-app</code> crie toda a estrutura de pastas e arquivos necessários, incluindo o <code>package.json</code>.
+                <pre><code>npx create-react-app meu-designer-ivr</code></pre>
+            </li>
+            <li>Aguarde a finalização. Depois, entre na pasta do projeto:
+                <pre><code>cd meu-designer-ivr</code></pre>
+            </li>
+        </ul>
+
+        <h3>2. Adicione os Seus Arquivos ao Projeto</h3>
+        <p>Agora que a estrutura base existe, vamos substituir os arquivos padrão pelos seus.</p>
+        <ul>
+            <li><strong>Arquivo <code>App.jsx</code>:</strong>
+                <ul>
+                    <li>Vá para a pasta <code>src</code>.</li>
+                    <li>Apague o arquivo <code>App.js</code> que foi criado automaticamente.</li>
+                    <li>Crie um novo arquivo chamado <strong><code>App.jsx</code></strong> e cole o código do seu componente React nele.</li>
+                </ul>
+            </li>
+            <li><strong>Arquivo <code>index.css</code>:</strong>
+                <ul>
+                    <li>Dentro da pasta <code>src</code>, abra o arquivo <code>index.css</code>.</li>
+                    <li>Apague todo o conteúdo e substitua pelas diretivas do Tailwind CSS:
+                        <pre><code>@tailwind base;
+@tailwind components;
+@tailwind utilities;</code></pre>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>3. Instale e Configure o Tailwind CSS</h3>
+        <p>O seu projeto precisa do Tailwind CSS para funcionar.</p>
+        <ul>
+            <li>No terminal, na raiz do seu projeto (<code>meu-designer-ivr</code>), instale as dependências:
+                <pre><code>npm install -D tailwindcss postcss autoprefixer</code></pre>
+            </li>
+            <li>Agora, crie os arquivos de configuração do Tailwind. Para garantir que o <code>npx</code> encontre o executável localmente, podemos usar a forma <code>npm run</code>. Adicione um script ao seu <code>package.json</code> para isso:
+                <ol>
+                    <li><strong>Abra o arquivo <code>package.json</code></strong> na raiz do seu projeto.</li>
+                    <li>Localize a seção <code>"scripts": { ... }</code> e adicione a linha <code>"tailwind-init": "tailwindcss init -p"</code> (se já existir, certifique-se de que está correta). Além disso, <strong>certifique-se de que a seção <code>"devDependencies"</code> esteja exatamente como mostrado abaixo</strong>, para evitar problemas de versão.
+                        <pre><code>{
+  "name": "meu-designer-ivr",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "tailwind-init": "tailwindcss init -p"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.4"
+  }
+}</code></pre>
+                    </li>
+                    <li><strong>Salve</strong> o arquivo <code>package.json</code>.</li>
+                    <li>Agora, no terminal, na raiz do seu projeto (<code>meu-designer-ivr</code>), execute o novo script:
+                        <pre><code>npm run tailwind-init</code></pre>
+                    </li>
+                </ol>
+            </li>
+            <li>Este comando criará os arquivos <code>tailwind.config.js</code> e <code>postcss.config.js</code> na raiz do seu projeto.</li>
+            <li>Abra o arquivo <code>tailwind.config.js</code> que foi criado e certifique-se que ele está configurado para analisar seus arquivos:
+                <pre><code>/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}", // Garante que o Tailwind analise seus arquivos React
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}</code></pre>
+            </li>
+            <li><strong>Abra o arquivo CSS principal</strong> (adicionalmente, <code>index.css</code> ou <code>App.css</code>) na pasta <code>src/</code> e adicione as diretivas de Tailwind no topo:
+                <pre><code>@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Seu CSS personalizado abaixo, se houver */</code></pre>
+            </li>
+        </ul>
+
+        <h3>4. Teste Localmente</h3>
+        <ul>
+            <li>Ainda no terminal, na raiz do projeto, execute:
+                <pre><code>npm start</code></pre>
+            </li>
+            <li>Isso deve abrir o seu projeto no navegador em <code>http://localhost:3000</code>. Se tudo estiver funcionando, você está pronto para a próxima fase.</li>
+        </ul>
+
+        <h2>Parte 2: Implantação no Servidor Ubuntu</h2>
+        <p>Agora que o projeto está completo e funcionando localmente, vamos publicá-lo no seu servidor.</p>
+
+        <h3>1. Pré-requisitos do Servidor</h3>
+        <ul>
+            <li><strong>Conecte-se ao seu servidor Ubuntu</strong> (geralmente via SSH).</li>
+            <li><strong>Atualize seu servidor:</strong>
+                <pre><code>sudo apt update && sudo apt upgrade -y</code></pre>
+            </li>
+            <li><strong>Instale o Node.js e o npm:</strong> A forma mais recomendada é usar o <code>nvm</code> (Node Version Manager).
+                <pre><code>curl -o- [https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh](https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh) | bash
+source ~/.bashrc
+nvm install --lts</code></pre>
+            </li>
+            <li><strong>Instale o Nginx</strong> (servidor web que mostrará seu site ao público):
+                <pre><code>sudo apt install nginx -y</code></pre>
+            </li>
+        </ul>
+
+        <h3>2. Gere a Versão de Produção do Seu App</h3>
+        <ul>
+            <li><strong>De volta à sua máquina local</strong>, no terminal, dentro da pasta <code>meu-designer-ivr</code>, execute o comando de "build":
+                <pre><code>npm run build</code></pre>
+            </li>
+            <li>Este comando cria uma pasta chamada <strong><code>build</code></strong> na raiz do seu projeto. Esta pasta contém uma versão otimizada e estática do seu aplicativo, pronta para ser publicada.</li>
+        </ul>
+
+        <h3>3. Envie os Arquivos para o Servidor</h3>
+        <ul>
+            <li>Você precisa copiar o conteúdo da pasta <code>build</code> (e <strong>apenas</strong> o conteúdo dela) para o seu servidor. Use o comando <code>scp</code> no seu terminal <strong>local</strong>:
+                <pre><code># Substitua 'usuario' pelo seu nome de usuário no servidor e 'ip_do_servidor' pelo IP do seu Ubuntu
+scp -r build/* usuario@ip_do_servidor:/var/www/html/</code></pre>
+            </li>
+            <li>Pode ser necessário criar a pasta <code>/var/www/html</code> e dar permissões a ela no servidor, caso não exista:
+                <pre><code>sudo mkdir -p /var/www/html
+sudo chown -R $USER:$USER /var/www/html</code></pre>
+            </li>
+        </ul>
+
+        <h3>4. Acesse o Aplicativo</h3>
+        <p>Pronto! O Nginx no Ubuntu já está configurado por padrão para servir os arquivos que estão em <code>/var/www/html</code>.</p>
+        <ul>
+            <li>Abra o seu navegador e acesse o endereço IP do seu servidor:
+                <pre><code>http://ip_do_seu_servidor</code></pre>
+            </li>
+        </ul>
+        <p>Seu aplicativo Designer de Fluxo IVR deve estar online e funcionando.</p>
+    </div>
+</body>
+</html>
